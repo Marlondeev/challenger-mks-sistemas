@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FaShoppingCart } from "react-icons/fa";
-
-interface HeaderProps {
-  cartItemCount: number;
-  onCartClick: () => void;
-}
+import { HeaderProps } from "../Types/header";
 
 const HeaderContainer = styled.header`
   background-color: #007bff;

@@ -4,14 +4,7 @@ import styled from "styled-components";
 import { getProducts } from "../../service/api";
 import ProductCard from "../ProductCard/intex";
 import Skeleton from "../Skeleton";
-
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  photo: string;
-  description: string;
-}
+import { Product } from "../Types/product";
 
 const Container = styled.div`
   display: flex;
