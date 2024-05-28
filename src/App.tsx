@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import styled from "styled-components";
+import Header from "./components/Header";
+import ProductList from "./components/ProductList";
+import CartSidebar from "./components/Sidebar";
+import { Product } from "./components/Types/product";
 
-function App() {
+const AppContainer = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+`;
+
+const MainContent = styled.main`
+  flex-grow: 1;
+`;
+
+const App: React.FC = () => {
+  const [cartOpen, setCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState<Product[]>([]);
+
+  const addToCart = (product: Product) => {
+    setCartItems((prevItems) => [...prevItems, product]);
+  };
+
+  const removeFromCart = (productId: string) => {
+    setCartItems(cartItems.filter((item) => item.id !== productId));
+  };
+
+  const toggleCart = () => {
+    setCartOpen(!cartOpen);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContainer>
+      <Header cartItemCount={cartItems.length} onCartClick={toggleCart} />
+      <MainContent>
+        <ProductList addToCart={addToCart} />
+      </MainContent>
+      <CartSidebar
+        cartOpen={cartOpen}
+        setCartOpen={setCartOpen}
+        cartItems={cartItems}
+        removeFromCart={removeFromCart}
+      />
+    </AppContainer>
   );
-}
+};
 
 export default App;
